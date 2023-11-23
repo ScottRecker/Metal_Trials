@@ -8,5 +8,31 @@
 import SwiftUI
 
 extension View {
-    
+    func colorShader() -> some View {
+        modifier(ColorShader())
+    }
+}
+
+struct ColorShader: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .colorEffect(ShaderLibrary.color())
+    }
+}
+
+extension View {
+    func sizeAwareColorShader() -> some View {
+        modifier(SizeAwareColorShader())
+    }
+}
+
+struct SizeAwareColorShader: ViewModifier {
+    func body(content: Content) -> some View {
+        content.visualEffect { content, proxy in
+            content
+                .colorEffect(ShaderLibrary.sizeAwareColor(
+                    .float2(proxy.size)
+                ))
+        }
+    }
 }
